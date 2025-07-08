@@ -1,0 +1,361 @@
+/* ===== DARK & SUBTLE EDITBLOG CSS ===== */
+
+/* Root Variables */
+:root {
+  --primary-accent: #666666;
+  --accent-hover: #777777;
+  --dark-bg: #1a1a1a;
+  --dark-card: #2a2a2a;
+  --dark-border: #333333;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --text-muted: #999999;
+  --input-bg: #1e1e1e;
+  --input-border: #404040;
+  --input-focus: #555555;
+  --danger-red: #ff4444;
+  --success-green: #4caf50;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --subtle-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Main Container */
+.EditBlog {
+  padding: 30px;
+  background: linear-gradient(145deg, var(--dark-card), rgba(35, 35, 35, 0.9));
+  border: 1px solid var(--dark-border);
+  border-radius: 16px;
+  box-shadow: var(--subtle-shadow);
+  transition: var(--transition-smooth);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.EditBlog::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.EditBlog:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border-color: var(--accent-hover);
+}
+
+/* Typography */
+.EditBlog h2 {
+  color: var(--text-primary);
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.EditBlog h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: var(--primary-accent);
+  border-radius: 1px;
+}
+
+/* Form Layout */
+.EditBlog form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.EditBlog .field-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.EditBlog .field-container label {
+  margin-bottom: 8px;
+}
+
+/* Labels */
+.EditBlog label {
+  font-size: 16px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 8px;
+  transition: var(--transition-smooth);
+}
+
+/* Input Fields */
+.EditBlog input[type="text"],
+.EditBlog input[type="email"],
+.EditBlog textarea,
+.EditBlog .field-container input[type="text"],
+.EditBlog .field-container textarea {
+  padding: 14px 16px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  font-size: 15px;
+  color: var(--text-primary);
+  transition: var(--transition-smooth);
+  margin-bottom: 0;
+}
+
+.EditBlog textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* Input Focus States */
+.EditBlog input[type="text"]:focus,
+.EditBlog input[type="email"]:focus,
+.EditBlog textarea:focus,
+.EditBlog .field-container input[type="text"]:focus,
+.EditBlog .field-container textarea:focus {
+  outline: none;
+  border-color: var(--input-focus);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(102, 102, 102, 0.2);
+}
+
+/* Input Hover States */
+.EditBlog input[type="text"]:hover,
+.EditBlog input[type="email"]:hover,
+.EditBlog textarea:hover,
+.EditBlog .field-container input[type="text"]:hover,
+.EditBlog .field-container textarea:hover {
+  border-color: var(--primary-accent);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Placeholder Styling */
+.EditBlog input[type="text"]::placeholder,
+.EditBlog input[type="email"]::placeholder,
+.EditBlog textarea::placeholder {
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.EditBlog input[type="text"]:focus::placeholder,
+.EditBlog input[type="email"]:focus::placeholder,
+.EditBlog textarea:focus::placeholder {
+  color: rgba(153, 153, 153, 0.6);
+}
+
+/* Primary Button */
+.EditBlog button {
+  padding: 16px 24px;
+  background: transparent;
+  border: 1px solid var(--primary-accent);
+  color: var(--text-primary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.EditBlog button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-accent);
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+
+.EditBlog button:hover {
+  color: var(--dark-bg);
+  transform: translateY(-2px);
+  box-shadow: var(--subtle-shadow);
+}
+
+.EditBlog button:hover::before {
+  left: 0;
+}
+
+.EditBlog button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.EditBlog button:focus {
+  outline: 2px solid var(--primary-accent);
+  outline-offset: 2px;
+}
+
+/* Delete Button */
+.EditBlog .delete {
+  background: transparent;
+  border: 1px solid var(--danger-red);
+  color: var(--danger-red);
+  border-radius: 8px;
+  padding: 16px 24px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.EditBlog .delete::before {
+  content: '🗑️';
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+.EditBlog .delete::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--danger-red);
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+
+.EditBlog .delete:hover {
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 68, 68, 0.3);
+}
+
+.EditBlog .delete:hover::after {
+  left: 0;
+}
+
+.EditBlog .delete:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Links */
+.EditBlog a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition-smooth);
+  position: relative;
+  border-bottom: 1px solid transparent;
+}
+
+.EditBlog a::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--primary-accent);
+  transition: width 0.3s ease;
+}
+
+.EditBlog a:hover::before {
+  width: 100%;
+}
+
+.EditBlog a:hover {
+  color: var(--accent-hover);
+}
+
+.EditBlog a:focus {
+  outline: 2px solid var(--primary-accent);
+  outline-offset: 2px;
+}
+
+/* Error Messages */
+.EditBlog .error {
+  color: var(--danger-red);
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: rgba(255, 68, 68, 0.1);
+  border-radius: 6px;
+  border-left: 3px solid var(--danger-red);
+}
+
+/* Success Messages */
+.EditBlog .success {
+  color: var(--success-green);
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: rgba(76, 175, 80, 0.1);
+  border-radius: 6px;
+  border-left: 3px solid var(--success-green);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .EditBlog {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .EditBlog h2 {
+    font-size: 24px;
+  }
+  
+  .EditBlog button,
+  .EditBlog .delete {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .EditBlog form {
+    gap: 15px;
+  }
+  
+  .EditBlog .field-container {
+    margin-bottom: 15px;
+  }
+}
+
+/* Light Theme Support */
+@media (prefers-color-scheme: light) {
+  :root {
+    --primary-accent: #555555;
+    --accent-hover: #333333;
+    --dark-bg: #fafafa;
+    --dark-card: #ffffff;
+    --dark-border: #e0e0e0;
+    --text-primary: #212121;
+    --text-secondary: #424242;
+    --text-muted: #757575;
+    --input-bg: #f8f8f8;
+    --input-border: #d0d0d0;
+    --input-focus: #999999;
+  }
+}
+
+/* Subtle Animation */
+@keyframes subtleFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-2px); }
+}
+
+.EditBlog {
+  animation: subtleFloat 10s ease-in-out infinite;
+}
