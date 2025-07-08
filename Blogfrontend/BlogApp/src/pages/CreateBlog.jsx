@@ -1,38 +1,46 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CreateBlog.css"; // Assuming you have a CSS file for styling
-// const token = localStorage.getItem("token");
-
-
+import "./CreateBlog.css"; // Optional styling
 
 export default function CreateBlog() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("");
   const navigate = useNavigate();
-const token = localStorage.getItem("token"); // or however you store it
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const response = await fetch("http://localhost:5000/api/blogs", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
-    },
-    body: JSON.stringify({ title, content, author }),
-  });
-  if (!response.ok) {
-    const errorData = await response.json();
-    
-    alert("Error creating blog: " + (errorData.error || errorData.message));
-    return;
-  }
-  const data = await response.json();
-  console.log("Blog created successfully:", data);
-  alert("Blog created successfully!");
-  navigate("/");
-   
-};
+  const token = localStorage.getItem("token");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("https://blogapp-9jm4.onrender.com/api/blogs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({ title, content, author }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert("Error creating blog: " + (data.error || data.message));
+        return;
+      }
+
+      alert("Blog created successfully!");
+      // Delay navigation to ensure alert shows first
+      setTimeout(() => {
+        navigate("/");
+      }, 300);
+
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
+
   return (
     <div className="CreateBlog">
       <h2>Create Blog</h2>
@@ -63,7 +71,7 @@ const handleSubmit = async (e) => {
             required
           />
         </div>
-        <button onClick={handleSubmit}>Create Blog</button>
+        <button type="submit">Create Blog</button>
       </form>
     </div>
   );

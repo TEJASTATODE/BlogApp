@@ -7,7 +7,7 @@ import "./Home.css"; // Assuming you have a CSS file for styling
 export default function Home() {
   const [blogs, setBlogs] = useState([]);
 useEffect(() => {
-  fetch("http://localhost:5000/api/blogs", {
+  fetch("https://blogapp-9jm4.onrender.com/api/blogs", {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

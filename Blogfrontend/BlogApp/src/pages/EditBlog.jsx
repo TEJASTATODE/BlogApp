@@ -22,7 +22,7 @@ export default function EditBlog() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetch(`http://localhost:5000/api/blogs/${id}`, {
+    await fetch(`https://blogapp-9jm4.onrender.com/api/blogs/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

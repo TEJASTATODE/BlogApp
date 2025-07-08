@@ -12,9 +12,11 @@ export default function BlogDetails() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/blogs/${id}`)
+    fetch(`https://blogapp-9jm4.onrender.com/api/blogs/${id}`)
       .then((res) => {
-        if (!res.ok) throw new Error("Blog not found");
+        if (!res.ok) {
+          throw new Error("Blog not found");
+        }
         return res.json();
       })
       .then((data) => setBlog(data))
@@ -22,7 +24,9 @@ export default function BlogDetails() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <p>Loading blog...</p>;
+  if (loading) {
+    return <p>Loading blog...</p>;
+  }
   if (error) return <p>Error: {error}</p>;
   const handleEdit = () => {
     // Navigate to the edit page with the blog ID
