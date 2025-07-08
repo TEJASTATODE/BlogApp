@@ -31,13 +31,11 @@ export default function CreateBlog() {
 
       alert("Blog created successfully!");
       // Delay navigation to ensure alert shows first
-      setTimeout(() => {
+      
         navigate("/");
-      }, 300);
-
-    } catch (error) {
-      console.error("Submission error:", error);
-      alert("An error occurred. Please try again.");
+      } catch (error) {
+      console.error("Error creating blog:", error);
+      alert("An error occurred while creating the blog. Please try again.");
     }
   };
 

@@ -9,7 +9,9 @@ router.post("/register", async (req, res) => {
   const { email, password } = req.body;
   try {
     const existing = await User.findOne({ email });
-    if (existing) return res.status(400).json({ error: "User already exists" });
+    if (existing) {
+      return res.status(400).json({ error: "User already exists" });
+    }
 
     const hashed = await bcrypt.hash(password, 10);
     const user = await User.create({ email, password });
@@ -28,10 +30,14 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email});
-    if (!user) return res.status(400).json({ error: "Invalid email or password" });
+    if (!user) {
+      return res.status(400).json({ error: "Invalid email or password" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ error: "No hashed password found" });
+    if (!isMatch) {
+      return res.status(400).json({ error: "No hashed password found" });
+    }
 
     const token = generateToken(user);
     res.status(200).json({ 

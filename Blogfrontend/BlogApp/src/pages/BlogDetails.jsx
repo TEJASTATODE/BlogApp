@@ -27,7 +27,9 @@ export default function BlogDetails() {
   if (loading) {
     return <p>Loading blog...</p>;
   }
-  if (error) return <p>Error: {error}</p>;
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
   const handleEdit = () => {
     // Navigate to the edit page with the blog ID
     navigate(`/edit/${id}`);

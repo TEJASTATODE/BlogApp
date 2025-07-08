@@ -8,14 +8,19 @@ const path = require('path');
 const userRouter = require('./routes/User');
 const blogRoutes = require('./routes/Blogs');
 
-const app = express(
+const app = express();
+
+
+app.get('/', (req, res) => {
+  res.send('Hello from Vercel!');
+});
+
+app.use(cors(
   {
-    origin: 'http://localhost:5000', 
-    // Adjust this to your frontend URL
-    credentials: true, // Allow cookies to be sent with requests
+    origin: 'https://frontendblog-opal.vercel.app',
+    credentials:true,
   }
-);
-app.use(cors());
+));
 
 const PORT = process.env.PORT || 5000;
 
@@ -28,6 +33,9 @@ app.use('/api/blogs', blogRoutes);
 
 
 mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  // Use the DB_NAME from .env
 
 }).then(() => {
   console.log('Connected to MongoDB');
@@ -38,3 +46,4 @@ mongoose.connect(process.env.MONGO_URI, {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+module.exports = app; // Export the app for testing purposes

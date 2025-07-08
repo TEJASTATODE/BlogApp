@@ -17,7 +17,9 @@ router.get("/",  async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
-    if (!blog) return res.status(404).json({ message: "Blog not found" });
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
     res.status(200).json(blog);
   } catch (error) {
     res.status(500).json({ message: "Error fetching blog" });
@@ -49,7 +51,9 @@ router.put("/:id", requireAuth, async (req, res) => {
     const { title, content, author } = req.body;
     const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, { title, content, author }, { new: true });
     await updatedBlog.save();
-    if (!updatedBlog) return res.status(404).json({ message: "Blog not found" });
+    if (!updatedBlog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
 
     res.status(200).json({ message: "Blog updated successfully", blog: updatedBlog });
   } catch (error) {
