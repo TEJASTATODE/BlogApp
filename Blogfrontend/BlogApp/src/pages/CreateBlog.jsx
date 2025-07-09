@@ -24,19 +24,22 @@ export default function CreateBlog() {
 
       const data = await response.json();
 
-      if (!response.ok) {
-        alert("Error creating blog: " + (data.error || data.message));
-        return;
-      }
+      if (response.status !== 200 && response.status !== 201) {
+      alert("Error creating blog: " + (data?.error || data?.message || "Unknown error"));
+      return;
+    }
 
       alert("Blog created successfully!");
       // Delay navigation to ensure alert shows first
       
         navigate("/");
-      } catch (error) {
+    } 
+
+    catch (error) {
       console.error("Error creating blog:", error);
       alert("An error occurred while creating the blog. Please try again.");
     }
+    
   };
 
   return (
