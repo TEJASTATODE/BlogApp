@@ -11,9 +11,6 @@ const blogRoutes = require('./routes/Blogs');
 const app = express();
 
 
-app.get('/', (req, res) => {
-  res.send('Hello from Vercel!');
-});
 
 app.use(cors(
   {
@@ -32,12 +29,7 @@ app.use('/api/blogs', blogRoutes);
 
 
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  // Use the DB_NAME from .env
-
-}).then(() => {
+mongoose.connect(process.env.MONGO_URI).then(() => {
   console.log('Connected to MongoDB');
 }).catch((error) => {
   console.error('Error connecting to MongoDB:', error);

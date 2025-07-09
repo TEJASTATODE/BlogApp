@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken');
 const User = require('../models/Users');
 const { verifyToken } = require('../utils/jwt');
 
 async function requireAuth(req, res, next) {
-  const token = req.cookies.token|| req.headers.authorization?.split(' ')[1];
+  const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+
   if (!token) {
     return res.status(401).json({ error: "Please register and login" });
   }
@@ -21,15 +21,18 @@ async function requireAuth(req, res, next) {
     }
 
     req.user = user;
+
+    // Logs for debugging
+    console.log("✅ Token received:", token);
+    console.log("✅ Decoded payload:", userPayload);
+    console.log("✅ JWT_SECRET used:", process.env.JWT_SECRET);
+
     next();
   } catch (err) {
+    console.error("❌ JWT verification error:", err);
     return res.status(401).json({ error: 'Invalid token' });
   }
-   console.log("Token received:", token);
-   console.log("Decoded payload:", userPayload);
-   console.log("JWT_SECRET:", process.env.JWT_SECRET);
 }
-
 
 module.exports = {
   requireAuth,
