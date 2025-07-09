@@ -6,40 +6,45 @@ export default function CreateBlog() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     try {
       const response = await fetch("https://blogapp-9jm4.onrender.com/api/blogs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ title, content, author }),
       });
 
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch (jsonError) {
+        console.warn("⚠️ No JSON body returned from backend.");
+        data = {};
+      }
 
-      if (response.status !== 200 && response.status !== 201) {
-      alert("Error creating blog: " + (data?.error || data?.message || "Unknown error"));
-      return;
-    }
+      if (!response.ok) {
+        alert("❌ Error creating blog: " + (data?.error || data?.message || "Unknown error"));
+        return;
+      }
 
-      alert("Blog created successfully!");
-      // Delay navigation to ensure alert shows first
-      
-        navigate("/");
-    } 
-
-    catch (error) {
-      console.error("Error creating blog:", error);
+      alert("✅ Blog created successfully!");
+      navigate("/");
+    } catch (error) {
+      console.error("🚨 Network or server error while creating blog:", error);
       alert("An error occurred while creating the blog. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
-    
   };
 
   return (
@@ -72,7 +77,9 @@ export default function CreateBlog() {
             required
           />
         </div>
-        <button type="submit">Create Blog</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Creating..." : "Create Blog"}
+        </button>
       </form>
     </div>
   );
